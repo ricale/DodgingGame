@@ -28,7 +28,7 @@ public class PlayerStat : Stat
         Level = 1;
         Exp = 0;
         Defense = 5;
-        MoveSpeed = 5.0f;
+        MoveSpeed = 2.0f;
         Gold = 0;
     }
 

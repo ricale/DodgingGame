@@ -21,7 +21,22 @@ public abstract class BaseController : MonoBehaviour
         set
         {
             _state = value;
-            // TODO: 상태에 따른 애니메이션 처리
+            // 상태가 바뀔 때마다 상태에 맞는 애니메이션으로 전환
+            Animator anim = GetComponent<Animator>();
+            switch(_state)
+            {
+                case Define.State.Die:
+                    break;
+                case Define.State.Idle:
+                    anim.CrossFade("WAIT", 0.1f);
+                    break;
+                case Define.State.Moving:
+                    anim.CrossFade("RUN", 0.1f);
+                    break;
+                case Define.State.Skill:
+                    anim.CrossFade("ATTACK", 0.1f, -1, 0);
+                    break;
+            }
         }
     }
 

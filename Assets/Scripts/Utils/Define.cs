@@ -22,6 +22,30 @@ public class Define
     // 레이어
     public enum Layer
     {
-        Ground = 8
+        Ground = 8,
+        Block = 9,
+        Monster = 10,
+    }
+    public enum Scene
+    {
+        Unknown,
+        Login,
+        Lobby,
+        Game
+    }
+
+
+
+    public enum MouseEvent
+    {
+        Press,
+        PointerDown,
+        PointerUp,
+        Click,
+    }
+    public enum CameraMode
+    {
+        QuarterView,
+        TopView
     }
 }

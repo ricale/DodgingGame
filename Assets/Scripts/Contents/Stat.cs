@@ -31,7 +31,7 @@ public class Stat : MonoBehaviour
         MaxHp = 100;
         Attack = 10;
         Defense = 5;
-        MoveSpeed = 5.0f;
+        MoveSpeed = 1.6f;
     }
 
     public virtual void OnAttacked(Stat attacker)
