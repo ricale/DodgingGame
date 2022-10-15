@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterController : BaseController
+public class MonsterController : CharacterControllerBase
 {
-    Stat _stat;
+    MonsterStat _stat;
 
     [SerializeField]
     float _scanRange = 100f;
 
     [SerializeField]
-    float _attackRange = 0.5f;
+    float _attackRange = 0.8f;
+
+    [SerializeField]
+    float _collisionRange = 1.0f;
 
     public override void init()
     {
         WorldObjectType = Define.WorldObject.Monster;
-        _stat = gameObject.GetComponent<Stat>();
+        _stat = gameObject.GetComponent<MonsterStat>();
         State = Define.State.Idle;
 
         // TODO
@@ -31,7 +34,6 @@ public class MonsterController : BaseController
 
         // 플레이어와 거리가 _scanRange 미만이면 플레이어를 쫓는다
         Vector3 dist = player.transform.position - transform.position;
-        Debug.Log($"dist.magnitude {dist.magnitude} _scanRange {_scanRange}");
         if(dist.magnitude <= _scanRange)
         {
             _lockTarget = player;
@@ -50,11 +52,13 @@ public class MonsterController : BaseController
 
         _destPos = _lockTarget.transform.position;
         Vector3 dir = _destPos - transform.position;
-        //if (dir.magnitude < 0.1f)
-        //{
-        //    State = Define.State.Idle;
-        //    return;
-        //}
+
+        if (dir.magnitude <= _collisionRange)
+        {
+            GameObject player = Managers.Game.GetPlayer();
+            if (player)
+                player.GetComponent<Stat>().OnCollided(_stat);
+        }
 
         NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
 
@@ -96,7 +100,25 @@ public class MonsterController : BaseController
 
     void OnHitEvent()
     {
-        // TODO
-        Debug.Log("OnHitEvent");
+        if(_lockTarget == null)
+        {
+            State = Define.State.Idle;
+            return;
+        }
+
+        Stat targetStat = _lockTarget.GetComponent<Stat>();
+        targetStat.OnAttacked(_stat);
+
+        if(targetStat.Hp <= 0)
+        {
+            State = Define.State.Idle;
+            return;
+        }
+
+        Vector3 dist = (_lockTarget.transform.position - transform.position);
+        if (dist.magnitude <= _attackRange)
+            State = Define.State.Skill;
+        else
+            State = Define.State.Moving;
     }
 }

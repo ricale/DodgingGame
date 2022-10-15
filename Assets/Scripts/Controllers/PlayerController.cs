@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : BaseController
+public class PlayerController : CharacterControllerBase
 {
     PlayerStat _stat;
     bool _stopSkill = false;
@@ -18,8 +18,8 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
 
-        // TODO
-        // HP바를 플레이어 캐릭터에 붙인다.
+        if (gameObject.GetComponentInChildren<UI_HpBar>() == null)
+            Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
     }
 
     // 이 함수는 BaseController.Update() 가 실행

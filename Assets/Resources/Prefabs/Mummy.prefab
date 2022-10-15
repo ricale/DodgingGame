@@ -263,8 +263,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4779623939817529638}
   - component: {fileID: 4779623939809742464}
-  - component: {fileID: -9041101311370976880}
   - component: {fileID: -3523992348793358691}
+  - component: {fileID: 7821676214183224930}
+  - component: {fileID: 5465248154188296032}
   m_Layer: 0
   m_Name: Mummy
   m_TagString: Untagged
@@ -310,24 +311,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-9041101311370976880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4779623939817176326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75023e27b438649fcb820541c8b12311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _level: 1
-  _hp: 0
-  _maxHp: 100
-  _attack: 0
-  _defense: 0
-  _moveSpeed: 10
 --- !u!114 &-3523992348793358691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +327,41 @@ MonoBehaviour:
   _state: 2
   _lockTarget: {fileID: 0}
   _scanRange: 100
-  _attackRange: 0.5
+  _attackRange: 0.8
+  _collisionRange: 1
+--- !u!136 &7821676214183224930
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4779623939817176326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2901188
+  m_Height: 1.0244954
+  m_Direction: 1
+  m_Center: {x: -0.010985911, y: 0.5017618, z: 0}
+--- !u!114 &5465248154188296032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4779623939817176326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ce8ec9bac48411aaa1f21e65686aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level: 0
+  _hp: 0
+  _maxHp: 0
+  _attack: 0
+  _defense: 0
+  _moveSpeed: 0
+  _collisionDamage: 0
 --- !u!1 &4779623939817176352
 GameObject:
   m_ObjectHideFlags: 0
