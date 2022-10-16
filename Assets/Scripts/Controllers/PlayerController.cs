@@ -7,6 +7,10 @@ public class PlayerController : CharacterControllerBase
     PlayerStat _stat;
     bool _stopSkill = false;
 
+    float _firePeriod = 1.0f;
+    float _nextFireTime = 2.0f;
+    HashSet<GameObject> _bullets = new HashSet<GameObject>();
+
     // 이 함수 BaseController.Start() 가 실행
     public override void init()
     {
@@ -22,10 +26,17 @@ public class PlayerController : CharacterControllerBase
             Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
     }
 
+    protected override void UpdateIdle()
+    {
+        shoot();
+    }
+
     // 이 함수는 BaseController.Update() 가 실행
     protected override void UpdateMoving()
     {
-        if(_lockTarget != null)
+        shoot();
+
+        if (_lockTarget != null)
         {
             _destPos = _lockTarget.transform.position;
             // magnitude: 벡터3의 길이
@@ -76,8 +87,10 @@ public class PlayerController : CharacterControllerBase
     // 이 함수는 BaseController.Update() 가 실행
     protected override void UpdateSkill()
     {
+        shoot();
+
         // 타겟이 없으면 아무것도 하지 않는.
-        if(_lockTarget == null)
+        if (_lockTarget == null)
             return;
 
         // 타겟 방향으로 회전
@@ -85,6 +98,24 @@ public class PlayerController : CharacterControllerBase
         Quaternion quat = Quaternion.LookRotation(dir);
         // 왜 여기는 Lerp 고 UpdateMoving 에서는 Slerp 일까? 맵이 작아서 차이 없을 것 같은데..
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime);
+    }
+
+    void shoot()
+    {
+        if (Time.time <= _nextFireTime)
+            return;
+
+        GameObject target = Managers.Game.GetNearestMonster(transform);
+        if (target == null)
+            return;
+
+        _nextFireTime = Time.time + _firePeriod;
+
+        GameObject _bullet = Managers.Game.Spawn(
+            Define.WorldObject.PlayerBullet,
+            "Bullets/Arrow");
+
+        _bullet.GetComponent<BulletController>().Shoot(transform, target.transform);
     }
 
     // 애니메이션 이벤트에서 발생

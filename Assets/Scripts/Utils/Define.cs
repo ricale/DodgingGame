@@ -10,6 +10,7 @@ public class Define
         Unknown,
         Player,
         Monster,
+        PlayerBullet,
     }
     // 플레이어/몬스터 상태
     public enum State

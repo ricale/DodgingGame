@@ -38,16 +38,11 @@ public class Stat : MonoBehaviour
 
     void Start()
     {
-        Level = 1;
-        Hp = 100;
-        MaxHp = 100;
-        Attack = 1;
-        Defense = 0;
-        MoveSpeed = 1f;
     }
 
     void OnDamanged(Stat attacker, float damage)
     {
+        Debug.Log($"OnDamaged Hp: {Hp} damage: {damage}");
         Hp -= damage;
         if (Hp <= 0)
         {

@@ -75,4 +75,22 @@ public class GameManager
 
         Managers.Resource.Destroy(go);
     }
+
+    public GameObject GetNearestMonster(Transform source)
+    {
+        float minDist = Mathf.Infinity;
+        GameObject minMonster = null;
+
+        foreach(GameObject go in _monsters)
+        {
+            float dist = Vector3.Distance(source.position, go.transform.position);
+            if(dist < minDist)
+            {
+                minDist = dist;
+                minMonster = go;
+            }
+        }
+
+        return minMonster;
+    }
 }

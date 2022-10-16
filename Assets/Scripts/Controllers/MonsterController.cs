@@ -26,6 +26,11 @@ public class MonsterController : CharacterControllerBase
         // HP 바
     }
 
+    public void Dead()
+    {
+        Managers.Game.Despawn(gameObject);
+    }
+
     protected override void UpdateIdle()
     {
         GameObject player = Managers.Game.GetPlayer();
