@@ -27,15 +27,22 @@ public class PlayerStat : Stat
     {
         Level = 1;
         Exp = 0;
-        Defense = 5;
-        MoveSpeed = 5.0f;
+        Defense = 0;
+        MoveSpeed = 2.0f;
         Gold = 0;
+
+        SetStat(Level);
     }
 
     public void SetStat(int level)
     {
-        // TODO
-        // - 데이터 파일에서 스탯 가져오기
+        Dictionary<int, Data.Stat> dict = Managers.Data.StatDict;
+
+        Data.Stat stat = dict[level];
+
+        Hp = stat.maxHp;
+        MaxHp = stat.maxHp;
+        Attack = stat.attack;
     }
 
     protected override void OnDead(Stat attacker)
